@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Display Data";
+    string[] TableHeaders = new string[] { "Home", "Classes", "Professors", "Tutors", "Textbook Exchange" };
+}
+<html>
+<head>
+
+</head>
+<body>
+    <div class="topnav">
+        <a href="Home.cshtml">Home</a>
+        <a href="Classes.cshtml">Classes</a>
+        <a href="Professors.cshtml">Professors</a>
+        <a href="Tutors.cshtml">Tutors</a>
+        <a href="TextbookExchange.cshtml">Textbook Exchange</a>
+    </div>
+    <div class="table">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    @{
+                    foreach (var head in TableHeaders)
+                    {
+                        <th>
+                            @head
+                        </th>
+                    }
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                if (Model != null)
+                {
+                    foreach (var Data in Model)
+                    {
+                    <tr>
+                        <td>@Data.Class_Title</td>
+                        <td>@Data.Class_Code</td>
+                        <td>@Data.Class_Description</td>
+                    </tr>
+
+
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+@*div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    </div>*@
