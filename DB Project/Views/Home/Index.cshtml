@@ -6,39 +6,32 @@
 <head>
 
 </head>
-<body>
-    <div class="topnav">
-        <a href="Home.cshtml">Home</a>
-        <a href="Classes.cshtml">Classes</a>
-        <a href="Professors.cshtml">Professors</a>
-        <a href="Tutors.cshtml">Tutors</a>
-        <a href="TextbookExchange.cshtml">Textbook Exchange</a>
-    </div>
+<body style="background-color:#debab1">
     <div class="table">
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
                     @{
-                    foreach (var head in TableHeaders)
-                    {
-                        <th>
-                            @head
-                        </th>
-                    }
+                        foreach (var head in TableHeaders)
+                        {
+                            <th>
+                                @head
+                            </th>
+                        }
                     }
                 </tr>
             </thead>
             <tbody>
                 @{
-                if (Model != null)
-                {
-                    foreach (var Data in Model)
+                    if (Model != null)
                     {
-                    <tr>
-                        <td>@Data.Class_Title</td>
-                        <td>@Data.Class_Code</td>
-                        <td>@Data.Class_Description</td>
-                    </tr>
+                        foreach (var Data in Model)
+                        {
+                            <tr>
+                                <td>@Data.Class_Title</td>
+                                <td>@Data.Class_Code</td>
+                                <td>@Data.Class_Description</td>
+                            </tr>
 
 
                         }

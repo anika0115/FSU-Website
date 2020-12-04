@@ -1,0 +1,32 @@
+﻿<html>
+<head>
+
+</head>
+<body style="background-color:#debab1">
+    <div style="padding: 0% 5% 0% 5%;">
+
+        <div style="display: flex; justify-content:center">
+            <div style="font-size:26px;">Textbooks</div>
+        </div>
+
+        <div style="display: flex; align-items:center; padding:0% 25% 0% 5%; flex-direction:column">
+            @{
+                if (Model != null)
+                {
+                    foreach (var Data in Model)
+                    {
+                        <div class="card" style="padding:0px 10px 0px 10px; width:100%; margin:5px 0px 5px 0px">
+                            <div style="font-size:20px">
+                                <span>Title: @Data.Textbook_Title</span>
+                            </div>
+                            <div><span>Auhtor: @Data.Textbook_Author</span></div>
+                            <div><span>Price: $@Data.Textbook_Price</span></div>
+                        </div>
+                    }
+                }
+            }
+        </div>
+
+    </div>
+</body>
+</html>

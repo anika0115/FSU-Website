@@ -61,7 +61,7 @@ namespace DB_Project.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data Source = &quot;JAYESH&quot;; database=&quot;FSUWebsite&quot;; integrated security = SSPI;.
+        ///   Looks up a localized string similar to Data Source = &quot;DESKTOP-VBDR7MI\SQLEXPRESS&quot;; database=&quot;FSUWebsite&quot;; integrated security = SSPI;.
         /// </summary>
         internal static string ConnectionString {
             get {
