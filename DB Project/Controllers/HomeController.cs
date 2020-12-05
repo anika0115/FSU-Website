@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using DB_Project.Models;
 using System.Data.SqlClient;
+using System.Text.Encodings.Web;
 
 namespace DB_Project.Controllers
 {
@@ -15,10 +16,11 @@ namespace DB_Project.Controllers
         SqlCommand com = new SqlCommand();
         SqlDataReader dr;
         SqlConnection con = new SqlConnection();
-        List<Classes> classes = new List<Classes>();
+        List<ClassesTaught> classes = new List<ClassesTaught>();
         List<Professors> Professors = new List<Professors>();
         List<Tutors> Tutors = new List<Tutors>();
         List<Textbooks> Textbooks = new List<Textbooks>();
+        List<Events> EventList = new List<Events>();
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
@@ -42,8 +44,7 @@ namespace DB_Project.Controllers
         {
         }
 
-
-        private void FetchClassData()
+        private void FetchEventData()
         {
             if (classes.Count > 0)
             {
@@ -55,18 +56,15 @@ namespace DB_Project.Controllers
             {
                 con.Open();
                 com.Connection = con;
-                com.CommandText = "SELECT * FROM Classes";
+                com.CommandText = "SELECT * FROM Events";
                 dr = com.ExecuteReader();
                 while (dr.Read())
                 {
-                    classes.Add(new Classes()
+                    EventList.Add(new Events()
                     {
-                        Class_Title = dr["Class_Title"].ToString()
+                        Event_Title = dr["Event_Title"].ToString()
                     ,
-                        Class_Code = dr["Class_Code"].ToString()
-                    ,
-                        Class_Description = dr["Class_Description"].ToString()
-
+                        Event_Date = (DateTime)dr["Event_Date"]
                     });
                 }
                 con.Close();
@@ -79,7 +77,75 @@ namespace DB_Project.Controllers
 
         }
 
-        private void FetchProfData()
+
+        private void FetchClassData()
+        {
+            if (classes.Count > 0)
+            {
+                classes.Clear();
+            }
+
+            if (true)
+            {
+                try
+                {
+                    con.Open();
+                    com.Connection = con;
+                    com.CommandText = "SELECT * FROM Classes";
+                    dr = com.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        classes.Add(new ClassesTaught()
+                        {
+                            Class_Title = dr["Class_Title"].ToString()
+                        ,
+                            Class_Code = dr["Class_Code"].ToString()
+                        ,
+                            Class_Description = dr["Class_Description"].ToString()
+
+                        });
+                    }
+                    con.Close();
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                }
+            }
+            else
+            {
+                try
+                {
+                    con.Open();
+                    com.Connection = con;
+                    com.CommandText = "SELECT Class_Title, Class_Code, Class_Description, Professor_Name FROM Professor_Instructs, Classes, Professors WHERE Professor_Instructs.Professor_Email = Professors.Professor_Email AND Professor_Instructs.Class_Code = Classes.Class_Code";
+                    dr = com.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        classes.Add(new ClassesTaught()
+                        {
+                            Class_Title = dr["Class_Title"].ToString()
+                        ,
+                            Class_Code = dr["Class_Code"].ToString()
+                        ,
+                            Class_Description = dr["Class_Description"].ToString()
+                        ,
+                            Professor_Name = dr["Professor_Name"].ToString()
+
+                        });
+                    }
+                    con.Close();
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                }
+            }
+        }
+
+        private void FetchProfData(int rating = 0)
         {
             if (Professors.Count > 0)
             {
@@ -89,23 +155,23 @@ namespace DB_Project.Controllers
             {
                 con.Open();
                 com.Connection = con;
-                com.CommandText = "SELECT * FROM Professors";
+                com.CommandText = "SELECT * FROM Professors WHERE Average_Rating >" + rating;
                 dr = com.ExecuteReader();
-                while (dr.Read())
-                {
-                    Professors.Add(new Professors()
-                    {
-                        Professor_Email = dr["Professor_Email"].ToString()
-                    ,
-                        Professor_Name = dr["Professor_Name"].ToString()
-                    ,
-                        Office_Location = dr["Office_Location"].ToString()
-                    ,
-                        Professor_Website = dr["Professor_Website"].ToString()
-                    ,
-                        Average_Rating = (double)dr["Average_Rating"]
-                    });
-                }
+                //while (dr.Read())
+                //{
+                //    Professors.Add(new Professors()
+                //    {
+                //        Professor_Email = dr["Professor_Email"].ToString()
+                //    ,
+                //        Professor_Name = dr["Professor_Name"].ToString()
+                //    ,
+                //        Office_Location = dr["Office_Location"].ToString()
+                //    ,
+                //        Professor_Website = dr["Professor_Website"].ToString()
+                //    ,
+                //        Average_Rating = (double)dr["Average_Rating"]
+                //    });
+                //}
                 con.Close();
             }
             catch (Exception ex)
@@ -186,12 +252,19 @@ namespace DB_Project.Controllers
 
         }
 
-        public IActionResult ProfessorsPage()
+        public IActionResult ProfessorsPage(int rating)
         {
-            FetchProfData();
+            FetchProfData(rating);
             return View(Professors);
         }
 
+        //public IActionResult ProfessorsPage(string name, int id = 1)
+        //{
+
+        //    ViewData["Message"] = "Hello " + name;
+        //    ViewData["NumTimes"] = id;
+        //    return View();
+        //}
 
         public IActionResult ClassesPage()
         {
@@ -213,7 +286,8 @@ namespace DB_Project.Controllers
 
         public IActionResult HomePage()
         {
-            return View();
+            FetchEventData();
+            return View(EventList);
         }
 
         public IActionResult testPage()

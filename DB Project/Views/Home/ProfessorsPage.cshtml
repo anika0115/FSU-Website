@@ -1,15 +1,49 @@
-﻿<html>
+﻿@model IEnumerable<DB_Project.Models.Professors>
+
+@{
+    ViewData["Title"] = "Professors";
+}
+<html>
 <head>
 
 </head>
 <body style="background-color:#debab1">
-    <div style="padding: 0% 5% 0% 5%;">
+    <!--<div style="padding: 0% 5% 0% 5%;">
 
         <div style="display: flex; justify-content:center">
             <div style="font-size:26px;">Professors</div>
         </div>
 
-        <div style="display: flex; align-items:center; padding:0% 25% 0% 5%; flex-direction:column">
+        @foreach (var item in Model)
+        {
+            <div>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Professor_Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Professor_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Office_Location)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Professor_Website)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Average_Rating)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Professor_Email">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Professor_Email">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Professor_Email">Delete</a>
+                    </td>
+                </tr>
+            </div>
+        }-->
+        
+
+        @*<div style="display: flex; align-items:center; padding:0% 25% 0% 5%; flex-direction:column">
             @{
                 if (Model != null)
                 {
@@ -27,8 +61,8 @@
                     }
                 }
             }
-        </div>
+        </div>*@
 
-    </div>
+    <!--</div>-->
 </body>
 </html>

@@ -1,0 +1,80 @@
+﻿@model IEnumerable<DB_Project.Models.Professors>
+
+@{
+    ViewData["Title"] = "Professors";
+}
+<html>
+<head>
+
+</head>
+<body style="background-color:#d1b371">
+    <div style="padding: 0% 5% 0% 5%;">
+
+        <div style="display: flex; justify-content:center">
+            <div style="font-size:26px;">Professors</div>
+        </div>
+
+        @*@foreach (var item in Model)
+            {
+                <div>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Professor_Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Professor_Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Office_Location)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Professor_Website)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Average_Rating)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Professor_Email">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Professor_Email">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Professor_Email">Delete</a>
+                        </td>
+                    </tr>
+                </div>
+            }*@
+
+
+        <div style="display: flex;justify-content:center">
+            <div style="display: flex; align-items:center;flex-direction:column;width:50%;margin-right:50px">
+                @{
+                    if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <div class="card" style="padding:0px 10px 0px 10px; width:100%; margin:5px 0px 5px 0px">
+                                <div style="font-size:20px">
+                                    <span>Name:  @Html.DisplayFor(modelItem => item.Professor_Name)</span>
+                                    <span style="float: right">Average Rating @Html.DisplayFor(modelItem => item.Average_Rating)/5</span>
+                                </div>
+                                <div><span>Professor Email: @Html.DisplayFor(modelItem => item.Professor_Email)</span></div>
+                                <div><span>Office Location: @Html.DisplayFor(modelItem => item.Office_Location)</span></div>
+                                <div><span>Professor Website: <a href="@Html.DisplayFor(modelItem => item.Professor_Website)" target="_blank">@Html.DisplayFor(modelItem => item.Professor_Website)</a></span></div>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+            <div style="width:25%; background-color:white;border-radius:.25rem;height:300px;padding: 20px 0px 0px 10px">
+                <form asp-controller="Professors" asp-action="ProfessorsPage">
+                    <p style="display: flex; align-items:center;flex-direction:column;">
+                        <div style="font-size: 20px;padding-bottom:10px">Rating: <input type="number" name="rating" step="any" style="margin-left:18px"></div>
+                        <div style="font-size: 20px;padding-bottom:10px">Name: <input type="text" name="name" step="any" style="margin-left:21px"></div>
+                        <div style="font-size: 20px;padding-bottom:10px">Email: <input type="text" name="email" step="any" style="margin-left:26px"></div>
+                        <div style="font-size: 20px;padding-bottom:10px">Location: <input type="text" name="location" step="any" style="margin-left:0px"></div>
+                        <input type="submit" value="Filter" />
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
