@@ -8,42 +8,52 @@
         <div style="display: flex; justify-content:center">
             <div style="font-size:26px;">Classes</div>
         </div>
-
-        <div style="display: flex; align-items:center; padding:0% 25% 0% 5%; flex-direction:column">
-            @{
-                if (Model[0].Professor_Name == null)
-                {
-                    foreach (var Data in Model)
+        <div style="display: flex;justify-content:center">
+            <div style="display: flex; align-items:center;flex-direction:column;width:50%;margin-right:50px">
+                @{
+                    if (Model[0].Professor_Name == null)
                     {
-                        <div class="card" style="padding:0px 10px 0px 10px; width:100%; margin:5px 0px 5px 0px">
-                            <div style="font-size:20px">
-                                <span>Name: @Data.Class_Title</span>
+                        foreach (var Data in Model)
+                        {
+                            <div class="card" style="padding:0px 10px 0px 10px; width:100%; margin:5px 0px 5px 0px">
+                                <div style="font-size:20px">
+                                    <span>Name: @Data.Class_Title</span>
+                                </div>
+                                <div><span>Class Code: @Data.Class_Code</span></div>
+                                <div><span>Description: @Data.Class_Description</span></div>
                             </div>
-                            <div><span>Class Code: @Data.Class_Code</span></div>
-                            <div><span>Description: @Data.Class_Description</span></div>
-                        </div>
+                        }
                     }
                 }
-            }
 
-            @{
-                if (Model[0].Professor_Name != null)
-                {
-                    foreach (var Data in Model)
+                @{
+                    if (Model[0].Professor_Name != null)
                     {
-                        <div class="card" style="padding:0px 10px 0px 10px; width:100%; margin:5px 0px 5px 0px">
-                            <div style="font-size:20px">
-                                <span>Name: @Data.Class_Title</span>
+                        foreach (var Data in Model)
+                        {
+                            <div class="card" style="padding:0px 10px 0px 10px; width:100%; margin:5px 0px 5px 0px">
+                                <div style="font-size:20px">
+                                    <span>Class: @Data.Class_Title</span>
+                                </div>
+                                <span style="font-size:20px">Teacher: @Data.Professor_Name</span>
+                                <div><span>Class Code: @Data.Class_Code</span></div>
+                                <div><span>Description: @Data.Class_Description</span></div>
                             </div>
-                            <span>Name: @Data.Professor_Name</span>
-                            <div><span>Class Code: @Data.Class_Code</span></div>
-                            <div><span>Description: @Data.Class_Description</span></div>
-                        </div>
+                        }
                     }
                 }
-            }
+            </div>
+            <div style="width:30%; background-color:white;border-radius:.25rem;height:400px;padding: 20px 0px 0px 10px">
+                <form asp-controller="Home" asp-action="ClassesPage">
+                    <p style="display: flex; align-items:center;flex-direction:column;">
+                        <div style="font-size: 20px;padding-bottom:10px">Hide Teachers: <input type="checkbox" name="showProfes" value="true" style="margin-left:5px"></div>
+                        <div style="font-size: 20px;padding-bottom:10px">Teacher Name: <input type="text" name="Tname" step="any" style="margin-left:5px"></div>
+                        <div style="font-size: 20px;padding-bottom:10px">Class Code: <input type="text" name="Cname" step="any" style="margin-left:35px"></div>
+                        <input type="submit" value="Filter" />
+                    </p>
+                </form>
+            </div>
         </div>
-
     </div>
 </body>
 </html>

@@ -78,20 +78,20 @@ namespace DB_Project.Controllers
         }
 
 
-        private void FetchClassData()
+        private void FetchClassData(bool showProf = true, string Tname = "*", string Cname = "*")
         {
             if (classes.Count > 0)
             {
                 classes.Clear();
             }
 
-            if (true)
+            if (showProf)
             {
                 try
                 {
                     con.Open();
                     com.Connection = con;
-                    com.CommandText = "SELECT * FROM Classes";
+                    com.CommandText = "SELECT * FROM Classes WHERE Class_Code LIKE '" + Cname + "%'";
                     dr = com.ExecuteReader();
                     while (dr.Read())
                     {
@@ -119,7 +119,7 @@ namespace DB_Project.Controllers
                 {
                     con.Open();
                     com.Connection = con;
-                    com.CommandText = "SELECT Class_Title, Class_Code, Class_Description, Professor_Name FROM Professor_Instructs, Classes, Professors WHERE Professor_Instructs.Professor_Email = Professors.Professor_Email AND Professor_Instructs.Class_Code = Classes.Class_Code";
+                    com.CommandText = "SELECT Class_Title, Classes.Class_Code, Class_Description, Professor_Name FROM Professor_Instructs, Classes, Professors WHERE Professor_Instructs.Professor_Email = Professors.Professor_Email AND Professor_Instructs.Class_Code = Classes.Class_Code AND Classes.Class_Code LIKE '" + Cname + "%' AND Professors.Professor_Name LIKE '" + Tname + "%'";
                     dr = com.ExecuteReader();
                     while (dr.Read())
                     {
@@ -266,9 +266,9 @@ namespace DB_Project.Controllers
         //    return View();
         //}
 
-        public IActionResult ClassesPage()
+        public IActionResult ClassesPage(bool showProfes, string Tname, string Cname)
         {
-            FetchClassData();
+            FetchClassData(showProfes, Tname, Cname);
             return View(classes);
         }
 
